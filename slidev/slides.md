@@ -1,385 +1,268 @@
 ---
-# try also 'default' to start simple
 theme: seriph
-# random image from a curated Unsplash collection by Anthony
-# like them? see https://unsplash.com/collections/94734566/slidev
-background: https://source.unsplash.com/collection/94734566/1920x1080
-# apply any windi css classes to the current slide
-class: 'text-center'
-# https://sli.dev/custom/highlighters.html
-highlighter: shiki
-# show line numbers in code blocks
-lineNumbers: false
-# some information about the slides, markdown enabled
-info: |
-  ## Slidev Starter Template
-  Presentation slides for developers.
-
-  Learn more at [Sli.dev](https://sli.dev)
-# persist drawings in exports and build
-drawings:
-  persist: false
-# use UnoCSS (experimental)
-css: unocss
+background: ./images/javascript.jpg
+layout: cover
 ---
 
-# Welcome to Slidev
-
-Presentation slides for developers
-
-<div class="pt-12">
-  <span @click="$slidev.nav.next" class="px-2 py-1 rounded cursor-pointer" hover="bg-white bg-opacity-10">
-    Press Space for next page <carbon:arrow-right class="inline"/>
-  </span>
-</div>
-
-<div class="abs-br m-6 flex gap-2">
-  <button @click="$slidev.nav.openInEditor()" title="Open in Editor" class="text-xl icon-btn opacity-50 !border-none !hover:text-white">
-    <carbon:edit />
-  </button>
-  <a href="https://github.com/slidevjs/slidev" target="_blank" alt="GitHub"
-    class="text-xl icon-btn opacity-50 !border-none !hover:text-white">
-    <carbon-logo-github />
-  </a>
-</div>
-
-<!--
-The last comment block of each slide will be treated as slide notes. It will be visible and editable in Presenter Mode along with the slide. [Read more in the docs](https://sli.dev/guide/syntax.html#notes)
--->
-
----
-
-# What is Slidev?
-
-Slidev is a slides maker and presenter designed for developers, consist of the following features
-
-- 📝 **Text-based** - focus on the content with Markdown, and then style them later
-- 🎨 **Themable** - theme can be shared and used with npm packages
-- 🧑‍💻 **Developer Friendly** - code highlighting, live coding with autocompletion
-- 🤹 **Interactive** - embedding Vue components to enhance your expressions
-- 🎥 **Recording** - built-in recording and camera view
-- 📤 **Portable** - export into PDF, PNGs, or even a hostable SPA
-- 🛠 **Hackable** - anything possible on a webpage
-
-<br>
-<br>
-
-Read more about [Why Slidev?](https://sli.dev/guide/why)
-
-<!--
-You can have `style` tag in markdown to override the style for the current page.
-Learn more: https://sli.dev/guide/syntax#embedded-styles
--->
-
-<style>
-h1 {
-  background-color: #2B90B6;
-  background-image: linear-gradient(45deg, #4EC5D4 10%, #146b8c 20%);
-  background-size: 100%;
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-text-fill-color: transparent;
-}
-</style>
-
----
-
-# Navigation
-
-Hover on the bottom-left corner to see the navigation's controls panel, [learn more](https://sli.dev/guide/navigation.html)
-
-### Keyboard Shortcuts
-
-|     |     |
-| --- | --- |
-| <kbd>right</kbd> / <kbd>space</kbd>| next animation or slide |
-| <kbd>left</kbd>  / <kbd>shift</kbd><kbd>space</kbd> | previous animation or slide |
-| <kbd>up</kbd> | previous slide |
-| <kbd>down</kbd> | next slide |
-
-<!-- https://sli.dev/guide/animations.html#click-animations -->
-<img
-  v-click
-  class="absolute -bottom-9 -left-7 w-80 opacity-50"
-  src="https://sli.dev/assets/arrow-bottom-left.svg"
-/>
-<p v-after class="absolute bottom-23 left-45 opacity-30 transform -rotate-10">Here!</p>
+# Javascriptový ekosystém
 
 ---
 layout: image-right
-image: https://source.unsplash.com/collection/94734566/1920x1080
+
+image: ./images/libs-icons.png
 ---
 
-# Code
+# Obsah:
 
-Use code snippets and get the highlighting directly![^1]
+- Úvod do Javascriptu
+- Runtimes & Engines
+- Module system
+- Package managers
+- Jazykové nadstavby (transpilery, kompilátory)
+- Build nástroje
+- Nástroje pro kvalitu kódu
+- Další Tooly
+- Knihovny a Frameworky
 
-```ts {all|2|1-6|9|all}
-interface User {
-  id: number
-  firstName: string
-  lastName: string
-  role: string
-}
+---
 
-function updateUser(id: number, update: User) {
-  const user = getUser(id)
-  const newUser = { ...user, ...update }
-  saveUser(id, newUser)
-}
+# Úvod do Javascriptu
+
+- Javascript je jazyk, který je vytvořen v roce 1995 pro webové prohlížeče (Netscape Navigator).
+- Autor je *Brendan Eich*.
+- JavaScript byl původně obchodní název implementace společnosti Netscape,
+- JScript je verze vlastní implementace Microsoftu.
+- ECMAScript je standardizovaná verze Javascriptu. (Ecma International)
+
+## Základní vlastnosti
+
+- interpretovaný*
+- dynamicky typovaný
+- jednovláknový (single-threaded)
+- multi paradigmatický (OOP i FP)
+
+<!-- Brendan Eich:
+- také spoluzakládal a řídil Mozzila foundation, 
+- stojí za Brave prohlížečem 
+
+Ecma script:
+- 13 verzí, poslední je ECMAScript 2022
+
+Ecma International:
+- mezinárodní nevýdělečná organizace pro normalizaci informačních a komunikačních systémů s otevřeným členstvím. 
+- Publikovala více než 400 standardů a 100 technických zpráv, z nichž více než 2/3 byly převzaty jako mezinárodní standardy nebo technické zprávy. 
+- Apple, google, Meta, IBM, microsoft, Huawei...
+
+Just in time kompilace:
+- kompilace probíhá při běhu programu
+- kombinace AOT (ahead of time) a interpretace
+-->
+
+---
+
+# Engine
+
+- Engine je program který spouští JS kód (kompiluje, interpretuje...)
+  <img src="/images/js_engine.jpeg" class="m-10 h-60" />
+- V8, SpiderMonkey, Chakra ...
+
+---
+
+# Runtime
+
+- Runtime je kontext, kde se spouští engine
+- Obsahuje vlastní API's, které engine používá
+  <img src="/images/js_runtime.jpg" class="m-5 h-60" />
+- Browser, Node.js, Deno.js, Bun.js ...
+
+<!--
+Runtime environment určuje jaké globální proměnné jsou dostupné a ovlivňují 
+způsob jakým je program vykonáván.
+-->
+---
+
+# Node.js
+
+- Node.js je runtime pro spouštění Javascriptu na serveru
+- Vytvořil Ryan Dahl v roce 2009
+- Node.js je open-source, multiplatformní, single-threaded
+- přímí přístup k službám operačního systému (file system, network, proces)
+- používá engine V8
+- Node.js je napsaný v C++
+- Moderní alternativy jsou: Deno.js, Bun.js, ...
+
+---
+
+# Module system
+
+- Moduly umožňují rozdělení kódu na znovupoužitelné části,
+- zlepšují strukturování aplikací, stavební systém pro organizaci aplikací
+- Modul = jednotka softwaru
+- Modulární systém = nástroje pro definování, vytváření, používání a sdílení modulů
+
+---
+
+# Moduly v jiných jazycích:
+
+- PHP obdoba = composer
+- .NET obdoba = nuget
+- Java obdoba = jars
+- Ruby obdoba = gems
+
+---
+
+# Moduly v Javascriptu:
+
+<img src="/images/frustrated.jpg" class="" />
+
+---
+
+- Původně nebyl modulární systém součástí specifikace jazyka.
+- ECMAScript 2015 (ES6) přidává ESM.
+- Node.js přidává CommonJS (CJS).
+- Další komunitní modulární systémy: AMD, UMD, SystemJS
+- V současnosti se používá převážně ESM a CJS
+- V budoucnu se bude používat pouze ESM
+
+<!-- 
+- V prohlížeči jsou moduly jednotlivé soubory importované přes script tag
+- ESM se snaží smazať rozdíly mezi prohlížečem a Node.js
+- ES6 definovala pouze formální specifikaci modulů, nikoliv implementaci - proto trvá naszení roky
+- node používá ESM od 13.2
+-->
+
+---
+
+# CJS - CommonJS
+
+- CJS je modulární systém pro Node.js
+- V browseru se používá přes bundlery (browserify, webpack)
+- Synchronní načítání
+
+---
+
+  ```js
+    // import pomocí require
+    const fs = require('fs');
+    
+    // export pomocí module.exports
+    module.exports = {
+        name: 'John',
+        age: 30
+    }
+  
+    // nebo
+    module.exports = () => {
+        console.log('Hello world');
+    }
+  
+    // nebo
+    module.exports = "Hello world";
+  
+    // nebo
+  exports.name = 'John';
+  exports.age = 30;
+
+  // takhle ale ne
+  // importuje prázdný objekt
+  exports = "Hello world";
+  ```
+
+<!--
+- module.exports - exportuje modul, defaultně je to prázdný objekt
+- exports - reference na module.exports
+- exports i module.exports jsou reference na objekt, který je exportován
+- exports lze používat pouze pro přidávání nových properties do objektu (ideální pro named export)
+- module.exports lze použít pro přepsání celého objektu (třeba při exportu funkce)
+-->
+
+---
+
+# AMD - Asynchronous Module Definition
+
+- AMD je modulární systém pro prohlížeče
+- Asynchronní načítání
+- Používá se přes loadery (require.js, curl.js, ...)
+- V současnosti zastaralý, používá se jen v legacy aplikacích
+```js
+    // helper/util.js
+    define(function () {
+      return {
+        log: function (text) {
+          return console.log(text);
+        }
+      };
+    });
+
+    // app/main.js
+    var util = require(["helper/util"]);
+    util.log("Hello world!");
+    
+    // app.js
+    requirejs(['app/main']);
 ```
 
-<arrow v-click="3" x1="400" y1="420" x2="230" y2="330" color="#564" width="3" arrowSize="1" />
+---
 
-[^1]: [Learn More](https://sli.dev/guide/syntax.html#line-highlighting)
-
-<style>
-.footnotes-sep {
-  @apply mt-20 opacity-10;
-}
-.footnotes {
-  @apply text-sm opacity-75;
-}
-.footnote-backref {
-  display: none;
-}
-</style>
+# UMD - Universal Module Definition
+- univerzální modulární systém, pro server i browser
+- komplikovaný zápis
+- modul za běhu detekuje v jakém prostředí je a podle toho se chová jinak
 
 ---
 
-# Components
+# ESM - ECMAScript Modules
+- Moderní js standard (EcmaScript 2015)
+- do budoucna preferovaný způsob
+- Statické načítání, importy jsou popsány na vrchu souboru, mimo flow programu
+```js
+    // helper/util.js
+    export function log(text) {
+      return console.log(text);
+    }
+    
+    export default class Something {
+      constructor() {
+        this.name = 'John';
+      }
+    }
 
-<div grid="~ cols-2 gap-4">
-<div>
-
-You can use Vue components directly inside your slides.
-
-We have provided a few built-in components like `<Tweet/>` and `<Youtube/>` that you can use directly. And adding your custom components is also super easy.
-
-```html
-<Counter :count="10" />
+    // app/main.js
+    import Something, { log } from 'helper/util';
+    log("Hello world!");
+    const something = new Something();
 ```
-
-<!-- ./components/Counter.vue -->
-<Counter :count="10" m="t-4" />
-
-Check out [the guides](https://sli.dev/builtin/components.html) for more.
-
-</div>
-<div>
-
-```html
-<Tweet id="1390115482657726468" />
-```
-
-<Tweet id="1390115482657726468" scale="0.65" />
-
-</div>
-</div>
-
-
----
-class: px-20
+<!--
+- dynamický import v ES2020 (ES11)
+-->
 ---
 
-# Themes
+# ESM vs CJS
+- CJS může používat `.cjs`, tím řekne Node.js, že má soubor načíst jako CJS
+- ESM může používat `.mjs`, tím řekne Node.js, že má soubor načíst jako ESM
+- package.json - `"type": "module"` - řekne Node.js, že má všechny soubory v adresáři načíst jako ESM
+- package.json - `"type": "commonjs"` - řekne Node.js, že má všechny soubory v adresáři načíst jako CJS
 
-Slidev comes with powerful theming support. Themes can provide styles, layouts, components, or even configurations for tools. Switching between themes by just **one edit** in your frontmatter:
-
-<div grid="~ cols-2 gap-2" m="-t-2">
-
-```yaml
----
-theme: default
----
-```
-
-```yaml
----
-theme: seriph
----
-```
-
-<img border="rounded" src="https://github.com/slidevjs/themes/blob/main/screenshots/theme-default/01.png?raw=true">
-
-<img border="rounded" src="https://github.com/slidevjs/themes/blob/main/screenshots/theme-seriph/01.png?raw=true">
-
-</div>
-
-Read more about [How to use a theme](https://sli.dev/themes/use.html) and
-check out the [Awesome Themes Gallery](https://sli.dev/themes/gallery.html).
-
----
-preload: false
----
-
-# Animations
-
-Animations are powered by [@vueuse/motion](https://motion.vueuse.org/).
-
-```html
-<div
-  v-motion
-  :initial="{ x: -80 }"
-  :enter="{ x: 0 }">
-  Slidev
-</div>
-```
-
-<div class="w-60 relative mt-6">
-  <div class="relative w-40 h-40">
-    <img
-      v-motion
-      :initial="{ x: 800, y: -100, scale: 1.5, rotate: -50 }"
-      :enter="final"
-      class="absolute top-0 left-0 right-0 bottom-0"
-      src="https://sli.dev/logo-square.png"
-    />
-    <img
-      v-motion
-      :initial="{ y: 500, x: -100, scale: 2 }"
-      :enter="final"
-      class="absolute top-0 left-0 right-0 bottom-0"
-      src="https://sli.dev/logo-circle.png"
-    />
-    <img
-      v-motion
-      :initial="{ x: 600, y: 400, scale: 2, rotate: 100 }"
-      :enter="final"
-      class="absolute top-0 left-0 right-0 bottom-0"
-      src="https://sli.dev/logo-triangle.png"
-    />
-  </div>
-
-  <div
-    class="text-5xl absolute top-14 left-40 text-[#2B90B6] -z-1"
-    v-motion
-    :initial="{ x: -80, opacity: 0}"
-    :enter="{ x: 0, opacity: 1, transition: { delay: 2000, duration: 1000 } }">
-    Slidev
-  </div>
-</div>
-
-<!-- vue script setup scripts can be directly used in markdown, and will only affects current page -->
-<script setup lang="ts">
-const final = {
-  x: 0,
-  y: 0,
-  rotate: 0,
-  scale: 1,
-  transition: {
-    type: 'spring',
-    damping: 10,
-    stiffness: 20,
-    mass: 2
-  }
-}
-</script>
-
-<div
-  v-motion
-  :initial="{ x:35, y: 40, opacity: 0}"
-  :enter="{ y: 0, opacity: 1, transition: { delay: 3500 } }">
-
-[Learn More](https://sli.dev/guide/animations.html#motion)
-
-</div>
+<!--
+- Jak se Node.js rozhodne, jaký modulární systém použít?
+-->
 
 ---
 
-# LaTeX
-
-LaTeX is supported out-of-box powered by [KaTeX](https://katex.org/).
-
-<br>
-
-Inline $\sqrt{3x-1}+(1+x)^2$
-
-Block
-$$
-\begin{array}{c}
-
-\nabla \times \vec{\mathbf{B}} -\, \frac1c\, \frac{\partial\vec{\mathbf{E}}}{\partial t} &
-= \frac{4\pi}{c}\vec{\mathbf{j}}    \nabla \cdot \vec{\mathbf{E}} & = 4 \pi \rho \\
-
-\nabla \times \vec{\mathbf{E}}\, +\, \frac1c\, \frac{\partial\vec{\mathbf{B}}}{\partial t} & = \vec{\mathbf{0}} \\
-
-\nabla \cdot \vec{\mathbf{B}} & = 0
-
-\end{array}
-$$
-
-<br>
-
-[Learn more](https://sli.dev/guide/syntax#latex)
-
----
-
-# Diagrams
-
-You can create diagrams / graphs from textual descriptions, directly in your Markdown.
-
-<div class="grid grid-cols-3 gap-10 pt-4 -mb-6">
-
-```mermaid {scale: 0.5}
-sequenceDiagram
-    Alice->John: Hello John, how are you?
-    Note over Alice,John: A typical interaction
-```
-
-```mermaid {theme: 'neutral', scale: 0.8}
-graph TD
-B[Text] --> C{Decision}
-C -->|One| D[Result 1]
-C -->|Two| E[Result 2]
-```
-
-```plantuml {scale: 0.7}
-@startuml
-
-package "Some Group" {
-  HTTP - [First Component]
-  [Another Component]
-}
-
-node "Other Groups" {
-  FTP - [Second Component]
-  [First Component] --> FTP
-}
-
-cloud {
-  [Example 1]
-}
+## Kompatibilita
+- CJS a ESM jsou částečně kompatibilní.
+- ESM module může částečně importovat CJS module.
+- CJS nemůže používat require(), dá se to částečně obejít pomocí import().
+- Nefunguje vždy, kvůli odlišné povaze (statické ESM, synchronní CJS, asynchronní import())
 
 
-database "MySql" {
-  folder "This is my folder" {
-    [Folder 3]
-  }
-  frame "Foo" {
-    [Frame 4]
-  }
-}
+### Module Resolution rozdíly
+- Algoritmus pro nalezení modulu
+- ESM import souboru musí pro správný resolution obsahovat příponu `.js` nebo `.mjs`
+- CJS import nemusí nutně obsahovat příponu
+- node option `--experimental-specifier-resolution=node` - ESM import souboru nemusí obsahovat příponu - experimentální
+
+### Další rozdíly
+- v ESM modulu nejsou dostupné globální proměnné `__dirname` a `__filename`
 
 
-[Another Component] --> [Example 1]
-[Example 1] --> [Folder 3]
-[Folder 3] --> [Frame 4]
-
-@enduml
-```
-
-</div>
-
-[Learn More](https://sli.dev/guide/syntax.html#diagrams)
-
-
----
-layout: center
-class: text-center
----
-
-# Learn More
-
-[Documentations](https://sli.dev) · [GitHub](https://github.com/slidevjs/slidev) · [Showcases](https://sli.dev/showcases.html)
