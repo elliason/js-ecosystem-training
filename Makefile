@@ -11,14 +11,14 @@ init:
 	make install-slidev-packages;
 
 start:
-	./cli/start;
+	./cli/start.js;
 
 start-pull:
-	./cli/start -p;
+	./cli/start.js -p;
 
 stop:
-	./cli/stop;
+	./cli/stop.js;
 
 restart:
-	./cli/restart;
+	./cli/restart.js;
 

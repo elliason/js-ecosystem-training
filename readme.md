@@ -1,4 +1,4 @@
-# JS ecosystem presentation
+# JS ecosystem course
 
 ## Setup
 

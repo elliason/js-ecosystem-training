@@ -1,10 +1,11 @@
 {
-    "name": "slidev-template",
+    "name": "js-ecocystem-course",
     "version": "1.0.0",
     "private": true,
+    "type": "module",
     "dependencies": {
         "commander": "^8.2.0",
-        "platypus-tools": "^0.0.9",
+        "platypus-tools": "^0",
         "shelljs": "^0.8.4",
         "typescript": "^4.4.4"
     },
