@@ -1,8 +1,9 @@
 #!/usr/bin/env node
-const path = require('path');
-const { stopPlatypusProject, checkForEnvVarsInObject, getExpandedEnvVars } = require("platypus-tools/dist/index");
+import path from "path";
+import {checkForEnvVarsInObject, getExpandedEnvVars, stopPlatypusProject, dirname} from "platypus-tools";
 
-const rootPath = path.join(__dirname, '/../');
+
+const rootPath = path.join(dirname(import.meta.url), '/../');
 const envFilePath = path.normalize(rootPath + './.env');
 
 const envVars = getExpandedEnvVars(envFilePath);

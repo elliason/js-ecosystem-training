@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-const path = require('path');
-const { Command } = require('commander');
-const { startPlatypusProject, getExpandedEnvVars, checkForEnvVarsInObject } = require('platypus-tools/dist/index');
+import path from 'path';
+import { Command } from 'commander';
+import { startPlatypusProject, getExpandedEnvVars, checkForEnvVarsInObject, dirname } from 'platypus-tools';
 
 const program = new Command();
 
@@ -13,7 +13,7 @@ program.option(
 program.parse(process.argv);
 const options = program.opts();
 
-const rootPath = path.join(__dirname, '/../');
+const rootPath = path.join(dirname(import.meta.url), '/../');
 const envFilePath = path.normalize(rootPath + './.env');
 
 const envVars = getExpandedEnvVars(envFilePath);
