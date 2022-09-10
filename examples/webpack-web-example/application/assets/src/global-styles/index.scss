@@ -1,0 +1,34 @@
+:root {
+    --basic-padding: 1rem;
+}
+
+body {
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+.page {
+    margin: 0;
+    padding: var(--basic-padding);
+}
+
+footer {
+    margin-top: var(--basic-padding);
+    padding-top: var(--basic-padding);
+    padding-bottom: var(--basic-padding);
+    border-top: 1px solid #eaeaea;
+    position: fixed;
+    bottom: 0;
+    background: #fff;
+    width: 100%;
+}
+
+.image {
+    width: 100%;
+    height: auto;
+
+    img {
+        width: 100%;
+        height: auto;
+    }
+}

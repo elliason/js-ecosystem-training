@@ -1,0 +1,9 @@
+.env
+.env.production
+logs
+node_modules
+yarn-error.log
+extras/certs/*
+!extras/certs/.gitkeep
+application/assets/dist/*
+!application/assets/dist/.gitkeep

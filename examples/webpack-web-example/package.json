@@ -1,0 +1,18 @@
+{
+    "name": "nginx-webpack-platypus-template",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module",
+    "workspaces": [
+        "application"
+    ],
+    "dependencies": {
+        "commander": "^8",
+        "platypus-tools": "^0",
+        "shelljs": "^0.8",
+        "typescript": "^4"
+    },
+    "devDependencies": {
+        "prettier": "^2"
+    }
+}

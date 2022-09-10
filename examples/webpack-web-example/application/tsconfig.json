@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "module": "esnext",
+        "moduleResolution": "node",
+        "target": "es2020",
+        "sourceMap": true,
+        "declaration": false,
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": false,
+        "forceConsistentCasingInFileNames": true
+    },
+    "include": ["assets/src/**/*"],
+    "exclude": ["node_modules"]
+}

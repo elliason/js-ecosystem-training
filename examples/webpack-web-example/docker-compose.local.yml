@@ -1,0 +1,23 @@
+version: '3.9'
+
+networks:
+    default:
+        external: true
+        name: ${DOCKER_NETWORK}
+
+services:
+    nginx:
+        image: eldy/nginx:alpine
+        container_name: '${APP_ID}-nginx'
+        labels:
+            - 'traefik.enable=true'
+            - 'traefik.docker.network=${DOCKER_NETWORK}'
+            - 'traefik.http.routers.${APP_ID}-nginx.rule=Host(`${APP_HOST}`)'
+            - 'traefik.http.routers.${APP_ID}-nginx.entrypoints=https'
+            - 'traefik.http.routers.${APP_ID}-nginx.tls=true'
+            - 'traefik.http.services.${APP_ID}-nginx.loadbalancer.server.port=8080'
+        volumes:
+            - ./application:/app
+        command: "nginx -g 'daemon off;'"
+        networks:
+            - default

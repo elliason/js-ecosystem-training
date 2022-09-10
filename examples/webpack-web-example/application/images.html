@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Web Page - Images</title>
+        <script type="application/javascript" src="assets/dist/main.js"></script>
+    </head>
+    <body class="page page--home" data-page="home">
+        <nav class="main-menu">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="contact.html">Kontakt</a></li>
+                <li><a href="images.html">Obrázky</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <h1>Images</h1>
+            <p>Tohle je stránka obrázků</p>
+            <div class="image">
+                <picture>
+                    <source srcset="assets/dist/images/ohrepano01.webp" type="image/webp" />
+                    <source srcset="assets/dist/images/ohrepano01.jpg" type="image/jpeg" />
+                    <img src="assets/dist/images/ohrepano01.jpg" alt="Image 1" />
+                </picture>
+            </div>
+            <div class="image">
+                <picture>
+                    <source srcset="assets/dist/images/les_nad_jakubovem_sunsetpanorama.webp" type="image/webp" />
+                    <source srcset="assets/dist/images/les_nad_jakubovem_sunsetpanorama.jpg" type="image/jpeg" />
+                    <img src="assets/dist/images/les_nad_jakubovem_sunsetpanorama.jpg" alt="Image 1" />
+                </picture>
+            </div>
+            <div class="image">
+                <picture>
+                    <source srcset="assets/dist/images/pano2.webp" type="image/webp" />
+                    <source srcset="assets/dist/images/pano2.jpg" type="image/jpeg" />
+                    <img src="assets/dist/images/pano2.jpg" alt="Image 1" />
+                </picture>
+            </div>
+        </main>
+
+        <footer>
+            <span>© Elias Ondrej</span>
+            <small style="margin-left: 20px"><a href="https://eliasondrej.com">eliasondrej.com</a> </small>
+        </footer>
+    </body>
+</html>
