@@ -1,0 +1,26 @@
+{
+  "name": "ts-cli-app",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "tsc:build": "tsc",
+    "tsc:watch": "tsc --watch",
+    "tsc:check": "tsc --noEmit"
+  },
+  "bin": {
+    "mf": "./dist/bin/mf.js"
+  },
+  "dependencies": {
+    "commander": "^9.4.0",
+    "dotenv": "^16.0.2",
+    "dotenv-expand": "^9.0.0",
+    "platypus-tools": "^0.0.12",
+    "shelljs": "^0.8.5"
+  },
+  "devDependencies": {
+    "@types/node": "^18.7.16",
+    "@types/shelljs": "^0.8.11",
+    "prettier": "^2.7.1",
+    "typescript": "^4.8.3"
+  }
+}
