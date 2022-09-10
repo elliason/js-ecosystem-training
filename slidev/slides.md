@@ -79,17 +79,117 @@ Just in time kompilace:
 Runtime environment určuje jaké globální proměnné jsou dostupné a ovlivňují 
 způsob jakým je program vykonáván.
 -->
+
+---
+layout: image
+image: './images/js-runtimes.jpeg'
+---
+
+# JS Runtimes
+
 ---
 
 # Node.js
-
-- Node.js je runtime pro spouštění Javascriptu na serveru
+https://nodejs.org/en/
+- JS runtime pro server
+- Používá V8 engine
+- napsaný v C++
 - Vytvořil Ryan Dahl v roce 2009
 - Node.js je open-source, multiplatformní, single-threaded
 - přímí přístup k službám operačního systému (file system, network, proces)
-- používá engine V8
-- Node.js je napsaný v C++
 - Moderní alternativy jsou: Deno.js, Bun.js, ...
+
+---
+
+# Deno.js
+https://deno.land/
++ JS, TS, WA runtime pro server
++ Používá V8 engine
++ Napsaný v Rustu
++ Vytvořil Ryan Dahl v roce 2018, 2020 produkční verze
++ 10 věcí které Ryan litoval na design node.js: https://medium.com/@imior/10-things-i-regret-about-node-js-ryan-dahl-2ba71ff6b4dc
+
+---
+
+# Deno.js
+
++ Browser kompatibilní API (ES modules, web workers, fetch, ...)
++ Bezpečnost na prvním místě, script má přístup pouze ke zdrojům které jsou explicitně povolené
++ Typescript out of the box
++ Obsahuje build-in Tooling (code formatter *deno fmt*, linter *deno lint*, testovací framework *deno test*, ...)
++ Knihovna standardních, prověřených modulů (https://deno.land/std)
++ Nepodporuje npm, ale používá URL adresy pro importy
+  ```js
+  import { serve } from "https://deno.land/std/http/server.ts";
+  ```
++ Deno moduly jsou založeny na URL adresách
++ Nepoužívá package.json, ale používá import mapy (https://deno.land/manual/linking_to_external_code/import_maps)
++ Nepodporuje commonjs, ale používá ES modules
+
+<!--
+Poměrně nekompatibilní s node.js, je potřeba přepisovat velkou část balíčků
+Za 4 roky nezískal velkou popularitu,
+-->
+
+---
+
+# Deno.js
+Deno import modulů:
+```js
+import { add } from 'https://x.nest.land/ramda@0.27.0/source/index.js';
+```
+VS Node:
+```js
+import { add } from 'ramda';
+```
+
+### Co je zde přesně modul Ramda?
+1) node.js module resolution algoritmus
+2) Package manager, připravuje soubory na disku tak aby node načetl správně moduly
+
+Deno používá URL adresy pro importy, takže moduly jsou založeny na URL adresách, které jsou immutable, což zaručuje, že modul bude vždy stejný
+
+
+---
+layout: image-right
+image: ./images/bun-fast.png
+---
+
+# Bun.js
+https://bun.sh/
+
++ JS, TS, WA runtime pro server
++ používá JavascriptCore engine (používá třeba Webkit/Safari) (https://github.com/WebKit/WebKit/tree/main/Source/JavaScriptCore)
++ Vytvořil Jarred Sumner v roce 2022, zatím beta verze
++ Napsán v Zig
++ Cíle:
+  - výkon/rychlost
+  - kompatibilita
+  - hotový tooling ekosystém
+
+---
+
+# Bun.js
++ podporuje ESM i CJS, podporuje node.js module resolution algoritmus
++ podporuje nativně typescript
++ automatické načítání .env proměnných
++ implementuje většinu node.js i web API's (fetch, websocket, ...)
++ vlastní build-in SQLite3 klient
++ podporuje některé node.js core moduly (fs, path)
+
+#### Bun CLI API
+```bash
+bun run // spustí js/ts soubor, nebo package.json script
+bun install // instaluje balíčky z npm
+bun wiptest // js/ts test runner podobný Jestu
+```
+
+---
+
+# Bun.js vs Deno.js vs Node.js
+- Node zůstává nejstabilnější
+- Deno největší důraz na bezpečnost
+- Bun nejlepší výkon + velký příslib do budoucna
 
 ---
 
@@ -141,7 +241,7 @@ způsob jakým je program vykonáván.
 
 ---
 
-  ```js
+```js
     // import pomocí require
     const fs = require('fs');
     
@@ -166,11 +266,11 @@ způsob jakým je program vykonáván.
   // takhle ale ne
   // importuje prázdný objekt
   exports = "Hello world";
-  ```
+```
 
 <!--
 - module.exports - exportuje modul, defaultně je to prázdný objekt
-- exports - reference na module.exports
+- exports - je reference na module.exports
 - exports i module.exports jsou reference na objekt, který je exportován
 - exports lze používat pouze pro přidávání nových properties do objektu (ideální pro named export)
 - module.exports lze použít pro přepsání celého objektu (třeba při exportu funkce)
@@ -235,6 +335,7 @@ způsob jakým je program vykonáván.
 <!--
 - dynamický import v ES2020 (ES11)
 -->
+
 ---
 
 # ESM vs CJS
@@ -264,5 +365,195 @@ způsob jakým je program vykonáván.
 
 ### Další rozdíly
 - v ESM modulu nejsou dostupné globální proměnné `__dirname` a `__filename`
+
+---
+
+# Package managers v node.js
+<img src="/images/package-managers.webp" />
+
+<!-- package managers zároveň i script runners / (build tools/ monorepo tools) -->
+
+---
+
+# NPM
+https://www.npmjs.com/
++ Node Package Manager
++ Standard
++ Dnes za ním stojí Microsoft (github)
+```bash
+npm install <package> # instalace
+npm install <package>@<version> # instalace konkrétní verze
+npm install <package> --global # instalace globálně
+npm run <script> # spuštění scriptu
+```
+
+---
+
+# Yarn
+https://yarnpkg.com/
+
++ Yarn 1 - https://classic.yarnpkg.com/
++ Yarn 2 (3) - https://yarnpkg.com/
+
++ Yarn 1 - v roce 2016 revoluční věc, rychlost, workspaces, lockfiles, offline mode, ...
++ Yarn 2 - v roce 2020, kontroverzní volby: PnP, zero-install...
+
+---
+
+# Yarn
+- umí více instalačních strategií
+- systém pluginů
+- flexibilní konfigurace
+- trvá dlouho pochopit všechny možnosti
+
+```bash
+yarn add <package> # instalace
+yarn add <package>@<version> # instalace konkrétní verze
+yarn global add <package> # instalace globálně
+yarn run <script> # spuštění scriptu
+yarn <script> # spuštění scriptu
+```
+
+---
+
+<img src="/images/black-hole.png" />
+
+---
+
+## Yarn 2 PnP (Plug'n'Play)
+- Problémy s node_modules (duplikace, rychlost, ...)
+- PnP - yarn vytvoří jeden soubor **.pnp.cjs**, mapující moduly dle jména a verze na konkrétní soubor
+- upravuje node.js, aby načítal moduly dle **.pnp.cjs** (méně filesystém dotazů při resolvingu)
+- standardně nejsou moduly v node_modules ale načítají se přímo z yarn cache
+- standardně není možné používat modul který není v dependencies
+- není plně kompatibilní, nové paradigma. Po 2 letech není široce přijato komunitou.
+### Jak to rozjet:
+Do package.json se přidá:
+```json
+{
+  "installConfig": {
+    "pnp": true
+  }
+}
+```
+
+<!-- 
+- Je jedno jestli 10 projektů používá úplně stejné knihovny, klasická instalace vytvoří kompletní node_modules složku v každém z nich.
+- Velké množství souborů kopírovaných při každé instalaci
+- Rychlost načítání modulů v runtimu, dlouhý boot time (node musí prohledávat filesystém kde se nacházejí moduly které ma načíst)
+
+-->
+
+---
+
+- Pro spouštění scriptů se používá `yarn node` místo `node`.
+
+Namísto:
+```json
+  "scripts": {
+      "start": "node ./server.js",
+  }
+```
+Se použije:
+```json
+  "scripts": {
+      "start": "yarn node ./server.js",
+  }
+```
+
+---
+
+## Yarn 2 Zero-Install
+- Dependecies jsou commitnuté do repozitáře, v zip archivu.
+- Není potřeba je instalovat - už tam jsou po naklonování
+- Pokaždé když se přidá nová dependency, je potřeba commitnout nový zip archiv
+- Výhody: rychlost instalace, offline mode, řeší to moduly stažené z registrů, bezp ...
+- Nevýhody: velikost repozitáře
+
+.gitignore:
+```gitignore
+!.yarn/cache
+```
+```bash
+git add .yarn
+```
+
+---
+
+## Upgradovat yarn ?
+### Yarn 2/3 se dá využívat i bez PnP a Zero-Install
+- upgrade na v.2:
+  ```bash
+  yarn set version berry
+  ```
+- In .yarnrc.yml , add:
+  ```yaml
+  nodeLinker: node-modules
+  ```
+- In .gitignore, add:
+  ```gitignore
+  .yarn/*
+  !.yarn/patches
+  !.yarn/releases
+  !.yarn/plugins
+  !.yarn/sdks
+  !.yarn/versions
+  ```
+
+---
+
+# Některé další výhody Yarn 2/3
+- Pluginy, např. plugin který automaticky přidá @types pro instalované balíčky
+- Vylepšená podpora workspaces
+- yarn dlx - obdoba npx (spouští npm balíčky bez instalace)
+... + další ( https://dev.to/arcanis/introducing-yarn-2-4eh1 )
+
+---
+
+# PNPM (Performant NPM)
+https://pnpm.io/
+
+- Vytvořil r. 2017 Zoltan Kochan
+- drop-in replacement pro NPM (zpětná kompatibilita)
+- Odlišná struktura node_modules (nested)
+- globální store modulů, každý balíček je jen jednou v globálním store (šetří místo)
+- Každý soubor v node_modules je hard link na globální store
+
+<!-- Je otázka zda se to dá využít pro naše docker-based projekty -->
+
+---
+
+# Bower
+- package manager pro front-end
+- deprecated
+
+---
+
+# Srovnání package managerů
+- https://blog.logrocket.com/javascript-package-managers-compared/
+
+---
+
+# Jazykové nadstavby
+- TypeScript
+- ~~CoffeeScript~~
+- Babel
+- SWC
+- ~~Flow~~
+- _Elm, ReasonML, PureScript, ClojureScript ..._
+
+---
+
+# TypeScript / Flow
+- Jazykové nadstavby pro JavaScript, přidávají statickou typizaci
+- Typescript je široce podporovaný, Flow pomalu umírá
+## Typescript
+- Vznikl v r. 2012, vytvořil Anders Hejlsberg (původní vývojář jazyka C#, vytvořil také Delphi a Turbo Pascal)
+- Zaštítěný Microsoftem
+- Vlastní kompiler
+- Každý JS kód je validní TS kód. Lze adoptovat postupně.
+
+
+
 
 
