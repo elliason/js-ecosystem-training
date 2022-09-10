@@ -21,6 +21,7 @@ image: ./images/libs-icons.png
 - Jazykové nadstavby (transpilery, kompilátory)
 - Build nástroje
 - Nástroje pro kvalitu kódu
+- Test runnery
 - Další Tooly
 - Knihovny a Frameworky
 
@@ -552,6 +553,298 @@ https://pnpm.io/
 - Zaštítěný Microsoftem
 - Vlastní kompiler
 - Každý JS kód je validní TS kód. Lze adoptovat postupně.
+
+---
+
+# Typescript
+- konfigurace TS je v souboru tsconfig.json (nebo CLI parametry)
+
+```json
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es5",
+    "sourceMap": true
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "include": [
+    "src/**/*"
+  ]
+}
+```
+
+https://www.typescriptlang.org/docs/
+
+---
+
+# Typescript
+- Typy se definují pomocí `interface` nebo `type`
+- Typy se používají pro definici parametrů proměnných, funkcí, objektů, polí, tříd ...
+- Upravuje některé JS konstrukce např. Třídy.
+- Přidává další konstrukce např. Generics, Enums, ...
+
+---
+
+# Typescript
+- Dokumentace: https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html
+- TypeScript type challenges: https://github.com/type-challenges/type-challenges
+
+---
+
+# Babel
+https://babeljs.io/
+- Vznikl v r. 2014, vytvořil Sebastian McKenzie jako osobní projekt
+- Cílem bylo převést ES6 kód do ES5 podporovaného všemi prohlížeči
+- Systém pluginů, které přidávají nové funkce
+- Dnes ztrácí na popularitě, protože většina prohlížečů podporuje moderní ECMAScript
+- Používá se také pro převod JSX do JS
+- Dá se použít pro převod TS do JS
+
+<!--
+TS = preprocesor
+Babel = posptprocesor
+-->
+
+---
+ 
+# Babel
+- konfigurace v .babelrc
+```bash
+  npm install --save-dev @babel/core @babel/cli
+```
+```json
+{
+  "scripts": {
+    "build": "babel src -d lib"
+  }
+}
+```
+
+---
+
+# SWC
+https://swc.rs/
+- Alternativa k Babelu, napsaná v Rustu
+- Zaštítěn Vercelem, součást next.js
+- Cílem bylo vytvořit rychlejší kompilátor pro TS
+- Podporuje také bundling, minifikaci, ...
+- porovnání s Babelem: https://swc.rs/docs/migrating-from-babel
+- konfigurace v `.swcrc` souboru
+
+---
+
+# Nástroje pro kvalitu kódu
+- ESLint / TSLint
+- Prettier
+- Husky
+- Lint-staged
+
+---
+
+# ESLint / TSLint
+- Lintery pro kontrolu kvality kódu
+- Především kontrolují syntaxi, ale i konvence
+- TSlint je deprecated, od verze 6.0.0 ESLint podporuje TS
+- konfigurace v souboru `.eslintrc` nebo `.eslintrc.json` nebo `.eslintrc.js`
+- konfigurace v `package.json` v sekci `eslintConfig`
+- konfigurace v CLI parametrech
+- https://stash.mediafactory.cz/projects/MFDEV/repos/frontend-coding-standards/browse
+
+```json
+{
+  "scripts": {
+    "eslint:fix": "eslint . --quiet --ext .ts,.tsx,.js,.jsx,.jsm,.cjs --fix",
+    "eslint:lint": "eslint . --ext .ts,.tsx,.js,.jsx,.jsm,.cjs"
+  }
+}
+```
+
+---
+
+# Prettier
+- Formátovací nástroj
+- Do určité míry konfigurovatelný
+- Konfigurace v souboru `.prettierrc` nebo `.prettierrc.js` nebo `package.json` v sekci `prettier`
+- automatické formátování při uložení souboru v IDE
+
+```json
+  {
+    "printWidth": 120,
+    "tabWidth": 4,
+    "useTabs": false,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "bracketSpacing": true,
+    "arrowParens": "always",
+    "endOfLine": "lf"
+  }
+```
+
+---
+
+# Prettier
+- podpora více formátů souborů
+```json
+{
+  "scripts": {
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,cjs,mjs,css,less,scss,json,yml,yaml,md,mdx}\""
+  }
+}
+```
+
+---
+
+# Husky
+- Git hooks
+- Před commitem, před pushem, před instalací, ...
+- Spolu s lint-staged
+- lint, test, formátovaní před commitem
+
+---
+
+# Test Runnery
+- Jest
+- Mocha
+- Jasmine
+- Ava
+- Cypress
+- Playwright
+
+---
+
+# Jest
+- Test runner od Facebooku
+- Primárně pro unit testy
+- Podporuje snapshot testy
+- Podporuje testování React komponent
+- Podporuje testování TypeScript
+
+---
+
+# Cypress
+https://www.cypress.io/
+- Test runner pro end-to-end testy
+- Využívá prohlížeč pro spuštění testů
+- Výhody: rychlost, snadná integrace s CI, snadná integrace s Cypress Dashboard
+- Dá se použít i pro obecně automatizování klikání v browseru
+- Vývojářsky přívětivé API
+
+---
+
+# Buildery / bundlery
+- Kombinování mnoha vstupních souborů do několika výstupních + jejich procesování
+- Součást procesingu je minifikace, transpilace, linting, ...
+- optimizace, tree shaking, code splitting ...
+- platformy pro vývoj, poskytují všechny potřebné služby a integrace
+- Moderní bundlery vytvářejí graf závislostí mezi soubory a vytvářejí bundle soubory, bundlují pouze ty soubory, které jsou potřeba
+
+---
+
+# Bundlery
+
+- Grunt
+- Gulp
+- Browserify
+- Webpack
+- Parcel
+- FuseBox
+- Rollup
+- Vite
+- esbuild
+
+---
+
+<img src="/images/bundlers.webp" />
+
+---
+
+# Webpack
+https://webpack.js.org/
+- standard mezi bundlery
+- velmi flexibilní
+- konfigurace může být velmi komplexní
+- základ mnoha dalších projektů (next.js, create-react-app, storybook, ...)
+- konfigurace v souboru `webpack.config.js`
+
+---
+
+# Webpack
+
+## entry pointy: 
+- soubory kde webpack začíná budovat dependency graph
+- webpack dále prochází importované moduly a přidává je do dependency graphu
+
+## output: 
+- výstupní složka kam webpack vytvoří bundle soubory
+
+---
+
+# Webpack
+## loaders:
+- webpack nepodporuje nativně všechny formáty souborů
+- loaders převádějí soubory do formátu, který webpack podporuje
+- např. `ts-loader` převádí TypeScript soubory do JavaScriptu
+- `file-loader` převádí obrázky do base64
+- `css-loader` převádí CSS soubory do JavaScriptu
+- `style-loader` převádí CSS soubory do inline CSS
+
+---
+
+# Webpack
+## plugins:
+- rozšíření webpacku
+- např. `html-webpack-plugin` vytváří HTML soubory z šablon
+- `mini-css-extract-plugin` vytváří CSS soubory z JavaScriptu
+- `terser-webpack-plugin` minifikuje JavaScript soubory
+- `copy-webpack-plugin` kopíruje soubory do výstupní složky
+- `webpack-bundle-analyzer` analyzuje bundle soubory
+- `webpack-dev-server` vytváří vývojový server
+
+---
+
+# Webpack
+## mode:
+- nastavuje výchozí nastavení webpacku
+- `development` - výchozí nastavení pro vývoj
+- `production` - výchozí nastavení pro produkci
+
+--- 
+
+# Parcel
+https://parceljs.org/
+- velmi jednoduchý bundler
+- rychlý
+- postrádá pokročilé možnosti
+- vhodné pro některé menší projekty
+
+---
+
+# Rollup
+https://rollupjs.org/guide/en/
+- jednoduché nastavit správné optimalizace
+- nemá tolik pluginů jako webpack
+
+---
+
+# Vite
+https://vitejs.dev/
+- moderní bundler
+- velmi rychlý, používá esbuild pro transpilaci + ES modules
+- od Evana You, autora Vue.js
+- obsahuje dev server
+- rychle získává popularitu
+- typescript out of the box
+- HMR out of the box
+- Rozdělí dependencies do 2 částí:
+- závislosti které nejsou často updatované jsou v samostatném bundle souboru, který se neaktualizuje při každém buildu
+- závislosti které jsou často updatované jsou poskytované on demand bez nutnosti buildu (využívá schopnost moderních browserů načítat ES modules on demand)
+- Produkční build využívá Rollup pro optimalizaci
+
+
+
 
 
 
