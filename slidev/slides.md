@@ -597,10 +597,11 @@ https://www.typescriptlang.org/docs/
 https://babeljs.io/
 - Vznikl v r. 2014, vytvořil Sebastian McKenzie jako osobní projekt
 - Cílem bylo převést ES6 kód do ES5 podporovaného všemi prohlížeči
-- Systém pluginů, které přidávají nové funkce
+- Systém pluginů, které přidávají nové možnosti transformace (lze si napsat vlastní jazykovou nadstavbu)
 - Dnes ztrácí na popularitě, protože většina prohlížečů podporuje moderní ECMAScript
-- Používá se také pro převod JSX do JS
-- Dá se použít pro převod TS do JS
+- Používá se také pro převod JSX do JS nebo TS do JS
+- preset-env - automaticky přidává potřebné pluginy pro převod ES6+ do ES5 - velmi pomalý, je třeba provést spoustu checků
+- dá se použít pro převod budoucích specifikací (Stage 1,2,3) do Ecmascriptu (https://github.com/tc39/proposals)
 
 <!--
 TS = preprocesor
@@ -632,6 +633,15 @@ https://swc.rs/
 - Podporuje také bundling, minifikaci, ...
 - porovnání s Babelem: https://swc.rs/docs/migrating-from-babel
 - konfigurace v `.swcrc` souboru
+
+---
+
+# Je třeba používat Babel nebo SWC ?
+- ano pokud:
+  - podporujete historické prohlížeče
+  - potřebujete převést budoucí specifikace do ES
+  - potřebujete převést vlastní syntaxi do JS
+- v roce 2022 to jinak není potřeba
 
 ---
 
@@ -766,6 +776,7 @@ https://webpack.js.org/
 - standard mezi bundlery
 - velmi flexibilní
 - konfigurace může být velmi komplexní
+- build time může být velmi dlouhý
 - základ mnoha dalších projektů (next.js, create-react-app, storybook, ...)
 - konfigurace v souboru `webpack.config.js`
 
@@ -815,8 +826,7 @@ https://webpack.js.org/
 
 # Parcel
 https://parceljs.org/
-- velmi jednoduchý bundler
-- rychlý
+- velmi jednoduchý bundler (zero config)
 - postrádá pokročilé možnosti
 - vhodné pro některé menší projekty
 
@@ -825,27 +835,101 @@ https://parceljs.org/
 # Rollup
 https://rollupjs.org/guide/en/
 - jednoduché nastavit správné optimalizace
-- nemá tolik pluginů jako webpack
+- defaultní nastavení vhodné pro většinu projektů
+- systém pluginů. Jednodušší napsat plugin než pro webpack
+- konfigurace v souboru `rollup.config.js` (nebo CLI argumenty)
+
+Kompilace pro browsery:
+```shell
+# compile to a <script> containing a self-executing function ('iife')
+rollup main.js --file bundle.js --format iife
+```
+Kompilace pro Node.js:
+```shell
+# compile to a CommonJS module ('cjs')
+rollup main.js --file bundle.js --format cjs
+```
+Kompilace do UMD:
+```shell
+# compile to a UMD module ('umd')
+rollup main.js --file bundle.js --format umd --name myModule
+```
+
+---
+
+# ESBuild
+https://esbuild.github.io/
+- napsal Evan Wallace ( spoluautor Figmy ) v Go
+- velmi rychlý bundler, vhodný pro development
+- není moc dobrý v minifikaci
+- low level API, používán v dalších bundlerech (Vite, Snowpack, ...)
+
+```json
+{
+  "scripts": {
+    "build": "esbuild app.jsx --bundle --outfile=out.js"
+  }
+}
+```
+
+Sofistikovanější nastavení pomocí vlastních scriptů (JS nebo Go):
+```js
+require('esbuild').build({
+  entryPoints: ['app.jsx'],
+  bundle: true,
+  outfile: 'out.js',
+}).catch(() => process.exit(1))
+```
 
 ---
 
 # Vite
 https://vitejs.dev/
-- moderní bundler
-- velmi rychlý, používá esbuild pro transpilaci + ES modules
 - od Evana You, autora Vue.js
-- obsahuje dev server
+- moderní bundler
+- velmi rychlý, používá esbuild pro development a rollup pro production bundle
 - rychle získává popularitu
-- typescript out of the box
-- HMR out of the box
-- Rozdělí dependencies do 2 částí:
-- závislosti které nejsou často updatované jsou v samostatném bundle souboru, který se neaktualizuje při každém buildu
-- závislosti které jsou často updatované jsou poskytované on demand bez nutnosti buildu (využívá schopnost moderních browserů načítat ES modules on demand)
-- Produkční build využívá Rollup pro optimalizaci
+- typescript out of the box, dev server out of the box, HMR out of the box
+- V dev módu rozdělí dependencies do 2 částí:
+  1) závislosti které nejsou často updatované jsou v samostatném bundle souboru, který se neaktualizuje při každém buildu
+  2) závislosti které jsou často updatované jsou poskytované on demand bez nutnosti buildu (využívá schopnost moderních browserů načítat ES modules on demand)
+- Produkční build využívá Rollup pro optimalizaci ( chunking, tree shaking ) ...
 
+<!--
+- Vite je francouzské slovo pro "rychlí"
+-->
 
+---
 
+# Monorepo Tooling 
+- Lerna
+- nx
+- Turborepo
 
+---
+
+# Turborepo
+https://turborepo.com/
+- build systém pro monorepo
+- novější alternativa k Nx (2021)
+- Zaštítěn Vercel (Next.js, SWC, SWR ...)
+- napsáno v Go
+- task scheduling, parallelizace, inkrementální buildy
+- local caching, remote caching, distributed caching
+- zlepšuje výkon CI/CD
+- konfigurace v `turbo.json`
+- podporuje všechny package managers (npm, yarn, pnpm )
+- neřeší dependency management (to zvládá yarn, npm, pnpm)
+**"We recommend that Turborepo runs your tasks, and your favorite package manager installs your packages."**
+
+---
+
+# Nx
+https://nx.dev/
+- build systém pro monorepo
+- alternativa k turborepu, starší (r. 2018)
+- napsáno v TypeScript
+- distributed task execution (turbo zatím nepodporuje)
 
 
 
